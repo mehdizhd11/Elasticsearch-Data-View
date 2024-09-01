@@ -14,30 +14,33 @@ class ElasticsearchRangeView(APIView):
             es = Elasticsearch(
                 [es_config.host],
                 http_auth=(es_config.username, es_config.password),
-                verify_certs=True,
+                verify_certs=False,
             )
 
             query_params = request.query_params.dict()
 
             index = query_params.get("index")
             field = query_params.get("field")
-            start = query_params.get("start")
-            end = query_params.get("end")
+            gte = query_params.get("start")
+            lte = query_params.get("end")
 
-            query = {
-                "range": {
-                    field: {
-                        "gte": start,
-                        "lte": end
+            body = {
+                "query": {
+                    "range": {
+                        field: {
+                            "gte": gte,
+                            "lte": lte,
+                        }
                     }
                 }
             }
 
-            data = es.search(index=index, body=query)
+            data = es.search(index=index, body=body)
 
-            print(data)
+            response_data = [hit['_source'] for hit in data['hits']['hits']]
 
-            return Response({"OK"})
+            message = {'status': 'OK', 'data': response_data}
+            return Response(message, status=status.HTTP_200_OK)
         except Exception as e:
             message = {'status': 'ERROR', 'message': str(e)}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
