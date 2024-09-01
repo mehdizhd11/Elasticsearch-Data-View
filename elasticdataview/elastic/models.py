@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Elasticsearch(models.Model):
+class ElasticConfig(models.Model):
     host = models.CharField(max_length=255)
     port = models.IntegerField()
     username = models.CharField(max_length=255)
@@ -10,4 +10,4 @@ class Elasticsearch(models.Model):
 
 
     class Meta:
-        db_table = 'Elasticsearch'
+        db_table = 'Elastic Config'

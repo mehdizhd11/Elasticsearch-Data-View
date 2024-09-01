@@ -4,5 +4,5 @@ from .models import *
 
 class ElasticsearchSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Elasticsearch
+        model = ElasticConfig
         fields = '__all__'

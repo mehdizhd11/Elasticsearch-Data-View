@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from .models import Elasticsearch
+from .models import ElasticConfig
 from .serializers import ElasticsearchSerializer
 from rest_framework import status
 from rest_framework.response import Response
@@ -12,8 +12,8 @@ class ElasticsearchView(APIView):
         try:
             serializer = ElasticsearchSerializer(data=request.data)
             if serializer.is_valid():
-                if Elasticsearch.objects.filter(**serializer.validated_data).exists():
-                    message = {'status': 'ERROR', 'data': 'Elasticsearch already exists'}
+                if ElasticConfig.objects.filter(**serializer.validated_data).exists():
+                    message = {'status': 'ERROR', 'data': 'ElasticConfig already exists'}
                     return Response(message, status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
                 message = {'status': 'CREATED', 'data': serializer.data}
@@ -28,7 +28,7 @@ class ElasticsearchView(APIView):
 
     def get(self, request, pk):
         try:
-            elastic = get_object_or_404(Elasticsearch, pk=pk)
+            elastic = get_object_or_404(ElasticConfig, pk=pk)
             serializer = ElasticsearchSerializer(elastic)
             message = {'status': 'GET', 'data': serializer.data}
             return Response(message, status=status.HTTP_200_OK)
@@ -39,7 +39,7 @@ class ElasticsearchView(APIView):
 
     def put(self, request, pk):
         try:
-            elastic = get_object_or_404(Elasticsearch, pk=pk)
+            elastic = get_object_or_404(ElasticConfig, pk=pk)
             serializer = ElasticsearchSerializer(elastic, data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -55,7 +55,7 @@ class ElasticsearchView(APIView):
 
     def delete(self, request, pk):
         try:
-            elastic = get_object_or_404(Elasticsearch, pk=pk)
+            elastic = get_object_or_404(ElasticConfig, pk=pk)
             elastic.delete()
             message = {'status': 'DELETED', 'data': pk}
             return Response(message, status=status.HTTP_204_NO_CONTENT)

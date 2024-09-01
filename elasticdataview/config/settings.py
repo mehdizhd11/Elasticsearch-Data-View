@@ -36,8 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'elasticsearch',
+    'elastic',
     'rest_framework',
+    'elastic_charts',
 ]
 
 MIDDLEWARE = [

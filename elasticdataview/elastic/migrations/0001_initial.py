@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Elasticsearch',
+            name='ElasticConfig',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('host', models.CharField(max_length=255)),
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('scheme', models.CharField(choices=[('http', 'http'), ('https', 'https')], max_length=255)),
             ],
             options={
-                'db_table': 'Elasticsearch',
+                'db_table': 'ElasticConfig',
             },
         ),
     ]
